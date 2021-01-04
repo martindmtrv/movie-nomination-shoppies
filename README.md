@@ -1,4 +1,6 @@
-# New Project
+# Movie-nomination-shoppies
+
+Small system to create a list of 5 movies for a award nomination, supports sharing urls and movie previews! Created for Shopify 2021 co-op application
 
 > ✨ Bootstrapped with Create Snowpack App (CSA).
 
