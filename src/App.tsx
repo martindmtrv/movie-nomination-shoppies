@@ -8,7 +8,6 @@ import {
   GridItem, 
   Heading,
   Input,
-  Textarea
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import "./App.css";
@@ -26,7 +25,7 @@ function createExampleMovies(n: number): OMDBMovie[] {
 
 function App() {
   // setup the state for the application
-  const [results, setResults] = useState(createExampleMovies(10));
+  const [results, setResults] = useState([] as OMDBMovie[]);
   const [selected, setSelected] = useState([] as OMDBMovie[]);
   const [query, setQuery] = useState("");
 
@@ -39,7 +38,7 @@ function App() {
       // ensure there's no duplicates
       if (ids.size === 5) {
         const movieRequests: Promise<Response>[] = [];
-        //ids.forEach(id => movieRequests.push(fetch(`${API_URL}?i=${id}&apikey=${API_KEY}`)));
+        ids.forEach(id => movieRequests.push(fetch(`${API_URL}?i=${id}&apikey=${API_KEY}`)));
 
         Promise.all(movieRequests)
           .then(responses => Promise.all(responses.map(res => res.json())))
@@ -48,6 +47,16 @@ function App() {
       }
     }
   }, []);
+
+
+  // on search query change we need to make a call to the api
+  useEffect(() => {
+    if (query) {
+      fetch(`${API_URL}?s=${query}&apikey=${API_KEY}&type=movie`)
+        .then(res => res.json())
+        .then((res: any) => !(res.Response === "False") && setResults(res.Search as OMDBMovie[]));
+    }
+  }, [query]);
 
   const nominationUrl = `${window.location.origin + window.location.pathname}?nominations=${selected.reduce((ids, movie, i) => ids + (i > 0 ? ",": "") + movie.imdbID, "")}`;
 

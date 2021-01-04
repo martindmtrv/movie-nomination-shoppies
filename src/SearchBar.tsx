@@ -11,7 +11,6 @@ function SearchBar({ isDisabled, onSearch }: ISearchBarProps) {
   return (
     <form onSubmit={(e: any) => {
       e.preventDefault();
-      console.log(e.target[0].value);
       onSearch && onSearch(e.target[0].value);
     }}>
       <InputGroup>
