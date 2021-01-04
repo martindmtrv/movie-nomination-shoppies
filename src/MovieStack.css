@@ -1,0 +1,6 @@
+.stack-item {
+  display: flex;
+  justify-content: space-around;
+  padding: 4px;
+  align-items: center;
+}
